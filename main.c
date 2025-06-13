@@ -1118,46 +1118,46 @@ void assert_failed(uint8_t *file, uint32_t line)
 
 
 
-[User Types Character]
-        ↓
-[HAL_UART_RxCpltCallback() Triggered]
-        ↓
-[Store Character in uartRxBuffer]
-        ↓
-[Echo Character Back to Terminal]
-        ↓
-[Wait for Next Character]
-        ↓
-┌─────────────────────────────────────┐
-│  [Is Enter Key Pressed? (\r or \n)] │
-└─────────────────────────────────────┘
-        ↓ Yes
-[Null-Terminate Buffer (uartRxBuffer[uartRxIndex] = '\0')]
-        ↓
-[Call ProcessUARTCommand()]
-        ↓
-[Reset uartRxIndex = 0]
-        ↓
-┌───────────────────────────────────────────────┐
-│         Inside ProcessUARTCommand()           │
-├───────────────────────────────────────────────┤
-│ Convert input to uppercase                    │
-│ Match with known commands via strncmp()       │
-│ Parse parameters (e.g., SET 50, MODE PULSE)   │
-│ Execute corresponding action                  │
-│ Send response over UART                       │
-│ Increment command counter                     │
-└───────────────────────────────────────────────┘
-        ↓
-[Command Affects System State?]
-        ↓ Yes
-┌───────────────────────────────────────┐
-│ Frequency change?                     │
-│   → Send to LED thread (message queue)│
-│ Mode change?                          │
-│   → Update global ledMode variable    │
-│ Status request?                       │
-│   → Read system state + send response │
-└───────────────────────────────────────┘
+// [User Types Character]
+//         ↓
+// [HAL_UART_RxCpltCallback() Triggered]
+//         ↓
+// [Store Character in uartRxBuffer]
+//         ↓
+// [Echo Character Back to Terminal]
+//         ↓
+// [Wait for Next Character]
+//         ↓
+// ┌─────────────────────────────────────┐
+// │  [Is Enter Key Pressed? (\r or \n)] │
+// └─────────────────────────────────────┘
+//         ↓ Yes
+// [Null-Terminate Buffer (uartRxBuffer[uartRxIndex] = '\0')]
+//         ↓
+// [Call ProcessUARTCommand()]
+//         ↓
+// [Reset uartRxIndex = 0]
+//         ↓
+// ┌───────────────────────────────────────────────┐
+// │         Inside ProcessUARTCommand()           │
+// ├───────────────────────────────────────────────┤
+// │ Convert input to uppercase                    │
+// │ Match with known commands via strncmp()       │
+// │ Parse parameters (e.g., SET 50, MODE PULSE)   │
+// │ Execute corresponding action                  │
+// │ Send response over UART                       │
+// │ Increment command counter                     │
+// └───────────────────────────────────────────────┘
+//         ↓
+// [Command Affects System State?]
+//         ↓ Yes
+// ┌───────────────────────────────────────┐
+// │ Frequency change?                     │
+// │   → Send to LED thread (message queue)│
+// │ Mode change?                          │
+// │   → Update global ledMode variable    │
+// │ Status request?                       │
+// │   → Read system state + send response │
+// └───────────────────────────────────────┘
 
 
